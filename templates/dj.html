@@ -224,6 +224,7 @@
     <div class="stat-item"><div class="stat-num" id="statVotos">0</div><div class="stat-label">Votos</div></div>
     <div style="margin-left:auto;padding:0 16px;display:flex;align-items:center">
       <a href="/display" target="_blank" style="padding:8px 18px;background:var(--black);color:var(--white);border-radius:20px;font-size:0.72rem;font-weight:700;letter-spacing:1px;text-decoration:none;white-space:nowrap">⛶ Open Display</a>
+      <a id="backupBtn" onclick="downloadBackup()" style="padding:8px 18px;background:transparent;color:var(--gray-400);border:1.5px solid var(--gray-200);border-radius:20px;font-size:0.72rem;font-weight:700;letter-spacing:1px;text-decoration:none;white-space:nowrap;cursor:pointer">💾 Backup DB</a>
     </div>
   </div>
 
@@ -687,6 +688,14 @@ async function clearMessageMain() {
     if (preview) preview.textContent = '';
     showNotif('Mensaje borrado', 'success');
   }
+}
+
+function downloadBackup() {
+  if (!PASSWORD) { showNotif('Inicia sesión primero', ''); return; }
+  const a = document.createElement('a');
+  a.href = `/api/dj/backup-db?password=${encodeURIComponent(PASSWORD)}`;
+  a.click();
+  showNotif('💾 Descargando backup...', 'success');
 }
 
 function toggleDark() {

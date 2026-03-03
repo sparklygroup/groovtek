@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect, HTTPException, Form
-from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
+from fastapi.responses import HTMLResponse, FileResponse, JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from dotenv import load_dotenv
@@ -354,6 +354,16 @@ async def config_publica():
     return {"event_name": "DJ Request", "subtitle": "asong.live — DJ Request System", "logo_url": "", "love_text": "Show Your Love 💛"}
 
 # ─── QR Code ──────────────────────────────────────────────────────────
+@app.get("/api/dj/backup-db")
+async def backup_db(password: str):
+    if password != DJ_PASSWORD:
+        raise HTTPException(403, "Forbidden")
+    return FileResponse(
+        "dj_request.db",
+        media_type="application/octet-stream",
+        filename=f"asong_backup_{__import__('datetime').datetime.now().strftime('%Y%m%d_%H%M')}.db"
+    )
+
 @app.get("/qr")
 async def qr_code():
     target = BASE_URL
