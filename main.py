@@ -351,7 +351,7 @@ async def config_publica():
         row = await cursor.fetchone()
     if row:
         return dict(row)
-    return {"event_name": "DJ Request", "subtitle": "asong.live — DJ Request System", "logo_url": "", "love_text": "Show Your Love 💛"}
+    return {"event_name": "DJ Request", "subtitle": "groovtek.com — DJ Request System", "logo_url": "", "love_text": "Show Your Love 💛"}
 
 # ─── QR Code ──────────────────────────────────────────────────────────
 @app.get("/api/dj/backup-db")
@@ -369,7 +369,7 @@ async def backup_db(password: str):
             rows = await cursor.fetchall()
             data[table] = [dict(r) for r in rows]
     import json
-    filename = f"asong_backup_{datetime.datetime.now().strftime('%Y%m%d_%H%M')}.json"
+    filename = f"groovtek_backup_{datetime.datetime.now().strftime('%Y%m%d_%H%M')}.json"
     from fastapi.responses import Response
     return Response(
         content=json.dumps(data, indent=2, default=str),
